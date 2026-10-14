@@ -1,0 +1,27 @@
+# config/topic_taxonomy.yaml
+# Topic labels matching dziri_topic_classifier_v2 model config.json id2label.
+# These MUST match the model output labels exactly.
+
+version: "2026-05-01"
+
+labels:
+  - "Déploiement de la fibre"
+  - "Espace Client + My Idoom"
+  - "Messages positifs / remerciements"
+  - "Commentaires agressifs / moqueurs / hors sujet"
+  - "Pannes et coupures générales"
+  - "Retards d'installation ou de mise en service"
+  - "Réclamation service"
+  - "Suggestions et remarques constructives"
+
+default_label: "Commentaires agressifs / moqueurs / hors sujet"
+
+descriptions:
+  "Déploiement de la fibre": "Fiber optic deployment, coverage expansion, infrastructure"
+  "Espace Client + My Idoom": "Customer portal, My Idoom app, account management"
+  "Messages positifs / remerciements": "Positive feedback, thank-you messages, satisfaction"
+  "Commentaires agressifs / moqueurs / hors sujet": "Aggressive, mocking, or off-topic comments"
+  "Pannes et coupures générales": "General outages, service interruptions, downtime"
+  "Retards d'installation ou de mise en service": "Installation delays, activation delays"
+  "Réclamation service": "Service complaints, customer support issues"
+  "Suggestions et remarques constructives": "Constructive suggestions and feedback"

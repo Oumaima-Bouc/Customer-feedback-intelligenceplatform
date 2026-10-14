@@ -1,0 +1,64 @@
+# Loki storage and retention configuration for the AI platform.
+#
+# Design goals:
+# - Single-node, Docker Compose friendly deployment.
+# - Keep labels low-cardinality so Loki stays fast and stable.
+# - Retain enough history for incident review without unbounded disk growth.
+
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 9096
+  log_level: warn
+
+common:
+  path_prefix: /loki
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
+
+schema_config:
+  configs:
+    - from: 2024-01-01
+      store: tsdb
+      object_store: filesystem
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+storage_config:
+  tsdb_shipper:
+    active_index_directory: /loki/index
+    cache_location: /loki/index_cache
+    cache_ttl: 24h
+  filesystem:
+    directory: /loki/chunks
+
+limits_config:
+  retention_period: 31d
+  ingestion_rate_mb: 16
+  ingestion_burst_size_mb: 32
+  max_query_parallelism: 16
+  max_entries_limit_per_query: 10000
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+  allow_structured_metadata: false
+
+compactor:
+  working_directory: /loki/compactor
+  retention_enabled: true
+  retention_delete_delay: 2h
+  delete_request_store: filesystem
+
+query_range:
+  results_cache:
+    cache:
+      embedded_cache:
+        enabled: true
+        max_size_mb: 128
+
+analytics:
+  reporting_enabled: false

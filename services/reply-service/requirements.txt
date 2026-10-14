@@ -1,0 +1,16 @@
+# Web / control API
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+pydantic==2.7.1
+pydantic-settings==2.3.0
+
+# Database (enqueue path — synchronous, control-plane)
+psycopg2-binary==2.9.9
+
+# Config + logging (shared libs)
+python-consul2==0.1.5
+structlog==24.2.0
+
+# Send-path pass (dispatcher): asyncpg pool + shared Meta Graph client
+asyncpg==0.29.0
+aiohttp==3.9.5

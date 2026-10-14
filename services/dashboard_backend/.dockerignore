@@ -1,0 +1,22 @@
+# Ignore python virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Ignore cache directories
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+
+# Ignore git data and local IDE configs
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Ignore local data/db files if they live in your project folder
+*.db
+*.sqlite3
+postgres_data/

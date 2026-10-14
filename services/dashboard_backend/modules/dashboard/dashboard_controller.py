@@ -1,0 +1,20 @@
+from fastapi import APIRouter, Depends, Query
+from middleware.auth_middleware import get_current_user
+from modules.dashboard import dashboard_service as svc
+router = APIRouter(tags=["Dashboard"])
+@router.get("/overview")
+async def overview(user: dict = Depends(get_current_user)): return svc.get_overview()
+@router.get("/sources")
+async def sources(user: dict = Depends(get_current_user)): return svc.get_sources_chart()
+@router.get("/topics-trend")
+async def topics_trend(days: int = Query(7, ge=1, le=30), user: dict = Depends(get_current_user)): return svc.get_topics_trend(days)
+@router.get("/topic-cards")
+async def topic_cards(user: dict = Depends(get_current_user)): return svc.get_topic_cards()
+@router.get("/stats")
+async def stats(user: dict = Depends(get_current_user)): return svc.get_stats()
+@router.get("/word-cloud")
+async def word_cloud(min_frequency: int = Query(0, ge=0), source: str = Query("", description="curated | discovered | empty=all"), user: dict = Depends(get_current_user)): return svc.get_word_cloud(min_frequency, source)
+@router.get("/jobs")
+async def jobs(service: str = Query(""), job_name: str = Query(""), status: str = Query(""), limit: int = Query(50, ge=1, le=200), user: dict = Depends(get_current_user)): return svc.list_jobs(service, job_name, status, limit)
+@router.get("/jobs/{execution_id}/logs")
+async def job_logs(execution_id: int, user: dict = Depends(get_current_user)): return svc.get_job_logs(execution_id)

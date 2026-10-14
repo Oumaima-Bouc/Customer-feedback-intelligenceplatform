@@ -1,0 +1,620 @@
+{
+  "header": {
+    "lastUpdated": "May 15, 2026 at 08:18 PM",
+    "sourcesCount": 74,
+    "dateRange": "May 1 – May 15, 2026"
+  },
+  "kpis": {
+    "dailyTreatment": {
+      "value": 24381,
+      "change": 18,
+      "sparkData": [4200, 3800, 5100, 4700, 6200, 5800, 7100, 6500, 8200, 7800, 9100, 8600]
+    },
+    "systemTotal": {
+      "value": "4.2M",
+      "change": 12,
+      "sparkData": [1800, 2100, 2400, 2800, 3100, 3400, 3700, 3900, 4000, 4100, 4150, 4200]
+    },
+    "sentimentScore": {
+      "value": 68,
+      "change": -4,
+      "aiConfidence": 91
+    },
+    "topSources": [
+      { "id": "src-twitter", "name": "Twitter/X", "color": "#1D9BF0", "initial": "X" },
+      { "id": "src-facebook", "name": "Facebook", "color": "#1877F2", "initial": "f" },
+      { "id": "src-instagram", "name": "Instagram", "color": "#E1306C", "initial": "IG" },
+      { "id": "src-tiktok", "name": "TikTok", "color": "#111827", "initial": "TT" }
+    ],
+    "moreSourcesCount": 67
+  },
+  "wordCloud": [
+    {
+      "id": "w1",
+      "word": "Connectivity",
+      "weight": 10,
+      "rotate": false,
+      "sentiment": { "positive": 72, "neutral": 18, "negative": 10 },
+      "mentions": 8420,
+      "trend": 12
+    },
+    {
+      "id": "w2",
+      "word": "Behavior",
+      "weight": 9,
+      "rotate": false,
+      "sentiment": { "positive": 65, "neutral": 22, "negative": 13 },
+      "mentions": 7800,
+      "trend": 9
+    },
+    {
+      "id": "w3",
+      "word": "analytics",
+      "weight": 8,
+      "rotate": true,
+      "sentiment": { "positive": 68, "neutral": 20, "negative": 12 },
+      "mentions": 7100,
+      "trend": 15
+    },
+    {
+      "id": "w4",
+      "word": "sentiment",
+      "weight": 7,
+      "rotate": false,
+      "sentiment": { "positive": 60, "neutral": 25, "negative": 15 },
+      "mentions": 6300,
+      "trend": 8
+    },
+    {
+      "id": "w5",
+      "word": "engagement",
+      "weight": 8,
+      "rotate": false,
+      "sentiment": { "positive": 75, "neutral": 18, "negative": 7 },
+      "mentions": 6900,
+      "trend": 18
+    },
+    {
+      "id": "w6",
+      "word": "insights",
+      "weight": 9,
+      "rotate": false,
+      "sentiment": { "positive": 70, "neutral": 20, "negative": 10 },
+      "mentions": 7500,
+      "trend": 14
+    },
+    {
+      "id": "w7",
+      "word": "platform",
+      "weight": 6,
+      "rotate": true,
+      "sentiment": { "positive": 58, "neutral": 30, "negative": 12 },
+      "mentions": 5100,
+      "trend": 7
+    },
+    {
+      "id": "w8",
+      "word": "trends",
+      "weight": 7,
+      "rotate": false,
+      "sentiment": { "positive": 62, "neutral": 25, "negative": 13 },
+      "mentions": 5800,
+      "trend": 11
+    },
+    {
+      "id": "w9",
+      "word": "prediction",
+      "weight": 8,
+      "rotate": true,
+      "sentiment": { "positive": 66, "neutral": 24, "negative": 10 },
+      "mentions": 6500,
+      "trend": 20
+    },
+    {
+      "id": "w10",
+      "word": "social",
+      "weight": 6,
+      "rotate": false,
+      "sentiment": { "positive": 55, "neutral": 30, "negative": 15 },
+      "mentions": 4800,
+      "trend": 5
+    },
+    {
+      "id": "w11",
+      "word": "intelligence",
+      "weight": 7,
+      "rotate": false,
+      "sentiment": { "positive": 72, "neutral": 20, "negative": 8 },
+      "mentions": 5500,
+      "trend": 16
+    },
+    {
+      "id": "w12",
+      "word": "data",
+      "weight": 10,
+      "rotate": false,
+      "sentiment": { "positive": 60, "neutral": 28, "negative": 12 },
+      "mentions": 8200,
+      "trend": 10
+    },
+    {
+      "id": "w13",
+      "word": "monitoring",
+      "weight": 5,
+      "rotate": true,
+      "sentiment": { "positive": 50, "neutral": 35, "negative": 15 },
+      "mentions": 3900,
+      "trend": 6
+    },
+    {
+      "id": "w14",
+      "word": "customer",
+      "weight": 7,
+      "rotate": false,
+      "sentiment": { "positive": 65, "neutral": 22, "negative": 13 },
+      "mentions": 5600,
+      "trend": 9
+    },
+    {
+      "id": "w15",
+      "word": "feedback",
+      "weight": 6,
+      "rotate": false,
+      "sentiment": { "positive": 55, "neutral": 30, "negative": 15 },
+      "mentions": 4600,
+      "trend": 4
+    },
+    {
+      "id": "w16",
+      "word": "network",
+      "weight": 5,
+      "rotate": true,
+      "sentiment": { "positive": 62, "neutral": 25, "negative": 13 },
+      "mentions": 3700,
+      "trend": 7
+    },
+    {
+      "id": "w17",
+      "word": "experience",
+      "weight": 7,
+      "rotate": false,
+      "sentiment": { "positive": 68, "neutral": 22, "negative": 10 },
+      "mentions": 5400,
+      "trend": 12
+    },
+    {
+      "id": "w18",
+      "word": "real-time",
+      "weight": 5,
+      "rotate": false,
+      "sentiment": { "positive": 58, "neutral": 30, "negative": 12 },
+      "mentions": 3500,
+      "trend": 8
+    },
+    {
+      "id": "w19",
+      "word": "clusters",
+      "weight": 4,
+      "rotate": true,
+      "sentiment": { "positive": 52, "neutral": 33, "negative": 15 },
+      "mentions": 2800,
+      "trend": 5
+    },
+    {
+      "id": "w20",
+      "word": "signals",
+      "weight": 5,
+      "rotate": false,
+      "sentiment": { "positive": 60, "neutral": 28, "negative": 12 },
+      "mentions": 3600,
+      "trend": 9
+    },
+    {
+      "id": "w21",
+      "word": "churn",
+      "weight": 4,
+      "rotate": false,
+      "sentiment": { "positive": 20, "neutral": 30, "negative": 50 },
+      "mentions": 2600,
+      "trend": -8
+    },
+    {
+      "id": "w22",
+      "word": "loyalty",
+      "weight": 6,
+      "rotate": false,
+      "sentiment": { "positive": 75, "neutral": 18, "negative": 7 },
+      "mentions": 4500,
+      "trend": 11
+    },
+    {
+      "id": "w23",
+      "word": "automation",
+      "weight": 5,
+      "rotate": true,
+      "sentiment": { "positive": 65, "neutral": 25, "negative": 10 },
+      "mentions": 3800,
+      "trend": 14
+    },
+    {
+      "id": "w24",
+      "word": "scoring",
+      "weight": 4,
+      "rotate": false,
+      "sentiment": { "positive": 58, "neutral": 30, "negative": 12 },
+      "mentions": 2900,
+      "trend": 6
+    },
+    {
+      "id": "w25",
+      "word": "topics",
+      "weight": 5,
+      "rotate": false,
+      "sentiment": { "positive": 55, "neutral": 32, "negative": 13 },
+      "mentions": 3400,
+      "trend": 7
+    },
+    {
+      "id": "w26",
+      "word": "volume",
+      "weight": 6,
+      "rotate": false,
+      "sentiment": { "positive": 50, "neutral": 35, "negative": 15 },
+      "mentions": 4200,
+      "trend": 5
+    },
+    {
+      "id": "w27",
+      "word": "sources",
+      "weight": 4,
+      "rotate": true,
+      "sentiment": { "positive": 60, "neutral": 28, "negative": 12 },
+      "mentions": 2700,
+      "trend": 4
+    },
+    {
+      "id": "w28",
+      "word": "classification",
+      "weight": 4,
+      "rotate": false,
+      "sentiment": { "positive": 62, "neutral": 26, "negative": 12 },
+      "mentions": 2500,
+      "trend": 8
+    },
+    {
+      "id": "w29",
+      "word": "threshold",
+      "weight": 3,
+      "rotate": true,
+      "sentiment": { "positive": 55, "neutral": 30, "negative": 15 },
+      "mentions": 1900,
+      "trend": 3
+    },
+    {
+      "id": "w30",
+      "word": "escalation",
+      "weight": 3,
+      "rotate": false,
+      "sentiment": { "positive": 25, "neutral": 35, "negative": 40 },
+      "mentions": 1700,
+      "trend": -5
+    },
+    {
+      "id": "w31",
+      "word": "patterns",
+      "weight": 4,
+      "rotate": false,
+      "sentiment": { "positive": 65, "neutral": 25, "negative": 10 },
+      "mentions": 2400,
+      "trend": 9
+    },
+    {
+      "id": "w32",
+      "word": "stream",
+      "weight": 3,
+      "rotate": true,
+      "sentiment": { "positive": 58, "neutral": 30, "negative": 12 },
+      "mentions": 1800,
+      "trend": 6
+    },
+    {
+      "id": "w33",
+      "word": "aggregation",
+      "weight": 3,
+      "rotate": false,
+      "sentiment": { "positive": 60, "neutral": 28, "negative": 12 },
+      "mentions": 1600,
+      "trend": 5
+    },
+    {
+      "id": "w34",
+      "word": "pipeline",
+      "weight": 3,
+      "rotate": true,
+      "sentiment": { "positive": 55, "neutral": 32, "negative": 13 },
+      "mentions": 1500,
+      "trend": 4
+    },
+    {
+      "id": "w35",
+      "word": "metrics",
+      "weight": 5,
+      "rotate": false,
+      "sentiment": { "positive": 65, "neutral": 25, "negative": 10 },
+      "mentions": 3300,
+      "trend": 10
+    },
+    {
+      "id": "w36",
+      "word": "API",
+      "weight": 3,
+      "rotate": false,
+      "sentiment": { "positive": 60, "neutral": 28, "negative": 12 },
+      "mentions": 1400,
+      "trend": 7
+    },
+    {
+      "id": "w37",
+      "word": "integration",
+      "weight": 4,
+      "rotate": true,
+      "sentiment": { "positive": 62, "neutral": 26, "negative": 12 },
+      "mentions": 2200,
+      "trend": 8
+    },
+    {
+      "id": "w38",
+      "word": "dashboard",
+      "weight": 5,
+      "rotate": false,
+      "sentiment": { "positive": 70, "neutral": 22, "negative": 8 },
+      "mentions": 3100,
+      "trend": 12
+    },
+    {
+      "id": "w39",
+      "word": "risk",
+      "weight": 3,
+      "rotate": false,
+      "sentiment": { "positive": 20, "neutral": 30, "negative": 50 },
+      "mentions": 1600,
+      "trend": -6
+    },
+    {
+      "id": "w40",
+      "word": "model",
+      "weight": 4,
+      "rotate": true,
+      "sentiment": { "positive": 65, "neutral": 25, "negative": 10 },
+      "mentions": 2300,
+      "trend": 9
+    },
+    {
+      "id": "w41",
+      "word": "inference",
+      "weight": 2,
+      "rotate": false,
+      "sentiment": { "positive": 60, "neutral": 28, "negative": 12 },
+      "mentions": 1100,
+      "trend": 5
+    },
+    {
+      "id": "w42",
+      "word": "workflow",
+      "weight": 3,
+      "rotate": false,
+      "sentiment": { "positive": 58, "neutral": 30, "negative": 12 },
+      "mentions": 1700,
+      "trend": 6
+    },
+    {
+      "id": "w43",
+      "word": "tagging",
+      "weight": 2,
+      "rotate": true,
+      "sentiment": { "positive": 55, "neutral": 32, "negative": 13 },
+      "mentions": 900,
+      "trend": 4
+    },
+    {
+      "id": "w44",
+      "word": "segmentation",
+      "weight": 3,
+      "rotate": false,
+      "sentiment": { "positive": 62, "neutral": 26, "negative": 12 },
+      "mentions": 1500,
+      "trend": 7
+    },
+    {
+      "id": "w45",
+      "word": "NLP",
+      "weight": 4,
+      "rotate": false,
+      "sentiment": { "positive": 68, "neutral": 22, "negative": 10 },
+      "mentions": 2100,
+      "trend": 11
+    },
+    {
+      "id": "w46",
+      "word": "frequency",
+      "weight": 2,
+      "rotate": true,
+      "sentiment": { "positive": 55, "neutral": 30, "negative": 15 },
+      "mentions": 800,
+      "trend": 3
+    },
+    {
+      "id": "w47",
+      "word": "velocity",
+      "weight": 2,
+      "rotate": false,
+      "sentiment": { "positive": 58, "neutral": 28, "negative": 14 },
+      "mentions": 750,
+      "trend": 4
+    },
+    {
+      "id": "w48",
+      "word": "precision",
+      "weight": 2,
+      "rotate": true,
+      "sentiment": { "positive": 65, "neutral": 25, "negative": 10 },
+      "mentions": 700,
+      "trend": 5
+    },
+    {
+      "id": "w49",
+      "word": "recall",
+      "weight": 2,
+      "rotate": false,
+      "sentiment": { "positive": 60, "neutral": 28, "negative": 12 },
+      "mentions": 680,
+      "trend": 3
+    },
+    {
+      "id": "w50",
+      "word": "accuracy",
+      "weight": 3,
+      "rotate": false,
+      "sentiment": { "positive": 68, "neutral": 22, "negative": 10 },
+      "mentions": 1300,
+      "trend": 8
+    }
+  ],
+  "topicTrend": {
+    "avgValue": 5300,
+    "dayLabels": ["Jun", "", "2", "", "3", "", "4", "", "5", "", "6", "", "7", "", "8"],
+    "topics": [
+      {
+        "key": "pricing",
+        "label": "Pricing",
+        "color": "#4338CA",
+        "gradientColor": "#818CF8",
+        "data": [
+          3500, 3500, 5800, 5800, 2400, 2400, 7600, 6500, 9000, 9000, 2400, 4600, 4600, 3400, 6800
+        ]
+      },
+      {
+        "key": "logistics",
+        "label": "Logistics",
+        "color": "#059669",
+        "gradientColor": "#34D399",
+        "data": [
+          2000, 2000, 3200, 3200, 4800, 4800, 3600, 3600, 5500, 5500, 6200, 6200, 4100, 4100, 5300
+        ]
+      },
+      {
+        "key": "ux",
+        "label": "UX",
+        "color": "#D97706",
+        "gradientColor": "#FCD34D",
+        "data": [
+          1200, 1200, 2800, 2800, 1800, 1800, 4200, 4200, 3100, 3100, 5800, 5800, 3700, 3700, 4900
+        ]
+      },
+      {
+        "key": "support",
+        "label": "Customer Support",
+        "color": "#DC2626",
+        "gradientColor": "#FCA5A5",
+        "data": [
+          4200, 4200, 2600, 2600, 6100, 6100, 4800, 4800, 7200, 7200, 3300, 3300, 5600, 5600, 4400
+        ]
+      },
+      {
+        "key": "delivery",
+        "label": "Delivery Delay",
+        "color": "#7C3AED",
+        "gradientColor": "#C4B5FD",
+        "data": [
+          800, 800, 1600, 1600, 3400, 3400, 2200, 2200, 4600, 4600, 3800, 3800, 6400, 6400, 5100
+        ]
+      }
+    ]
+  },
+  "topicSentiment": [
+    {
+      "id": "topic-loyalty",
+      "name": "Customer Loyalty",
+      "category": "Brand Health",
+      "sentiment": { "positive": 74, "neutral": 18, "negative": 8 },
+      "platforms": [
+        { "name": "IG", "pct": 40, "color": "#E1306C" },
+        { "name": "FB", "pct": 60, "color": "#1877F2" }
+      ],
+      "trend": 11,
+      "aiConfidence": 94,
+      "mentions": 12400,
+      "status": "healthy"
+    },
+    {
+      "id": "topic-pricing",
+      "name": "Pricing Concerns",
+      "category": "Revenue Risk",
+      "sentiment": { "positive": 22, "neutral": 30, "negative": 48 },
+      "platforms": [
+        { "name": "TW", "pct": 55, "color": "#1D9BF0" },
+        { "name": "TT", "pct": 45, "color": "#111827" }
+      ],
+      "trend": -18,
+      "aiConfidence": 89,
+      "mentions": 9800,
+      "status": "critical"
+    },
+    {
+      "id": "topic-delivery",
+      "name": "Delivery Experience",
+      "category": "Operations",
+      "sentiment": { "positive": 52, "neutral": 28, "negative": 20 },
+      "platforms": [
+        { "name": "FB", "pct": 48, "color": "#1877F2" },
+        { "name": "IG", "pct": 52, "color": "#E1306C" }
+      ],
+      "trend": 6,
+      "aiConfidence": 87,
+      "mentions": 8200,
+      "status": "healthy"
+    },
+    {
+      "id": "topic-support",
+      "name": "Support Response Time",
+      "category": "CX Operations",
+      "sentiment": { "positive": 31, "neutral": 29, "negative": 40 },
+      "platforms": [
+        { "name": "TW", "pct": 62, "color": "#1D9BF0" },
+        { "name": "FB", "pct": 38, "color": "#1877F2" }
+      ],
+      "trend": -9,
+      "aiConfidence": 92,
+      "mentions": 7500,
+      "status": "warning"
+    },
+    {
+      "id": "topic-app",
+      "name": "Mobile App UX",
+      "category": "Product Feedback",
+      "sentiment": { "positive": 63, "neutral": 24, "negative": 13 },
+      "platforms": [
+        { "name": "TT", "pct": 44, "color": "#111827" },
+        { "name": "IG", "pct": 56, "color": "#E1306C" }
+      ],
+      "trend": 17,
+      "aiConfidence": 91,
+      "mentions": 6900,
+      "status": "healthy"
+    },
+    {
+      "id": "topic-refund",
+      "name": "Refund Processing",
+      "category": "Finance Risk",
+      "sentiment": { "positive": 18, "neutral": 27, "negative": 55 },
+      "platforms": [
+        { "name": "TW", "pct": 70, "color": "#1D9BF0" },
+        { "name": "FB", "pct": 30, "color": "#1877F2" }
+      ],
+      "trend": -23,
+      "aiConfidence": 96,
+      "mentions": 5400,
+      "status": "critical"
+    }
+  ]
+}

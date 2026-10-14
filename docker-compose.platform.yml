@@ -1,0 +1,602 @@
+# =============================================================================
+# AI Platform — Docker Compose
+# 6 isolated microservices on a shared internal network.
+# Database volume preserves existing data.
+# Dynamic config lives in Consul KV — NOT in env vars.
+# =============================================================================
+
+services:
+  # ── 1. PostgreSQL Database (standalone) ────────────────────────────────────
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: postgres-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      # CRITICAL: same host path as existing scraper DB — preserves all data
+      - C:\docker-volumes\postgres-data_metascrapper:/var/lib/postgresql/data
+      # Run ALL migrations on first start (idempotent — safe on existing data)
+      - ./migrations/scraper/001_initial.sql:/docker-entrypoint-initdb.d/001_scraper.sql:ro
+      - ./migrations/topic_extraction/001_add_topic_sentiment_to_comments.sql:/docker-entrypoint-initdb.d/002_te_001.sql:ro
+      - ./migrations/topic_extraction/002_add_indexes.sql:/docker-entrypoint-initdb.d/003_te_002.sql:ro
+      - ./migrations/topic_extraction/003_add_topic_daily_tracking.sql:/docker-entrypoint-initdb.d/004_te_003.sql:ro
+      - ./migrations/topic_extraction/004_add_clustering_columns.sql:/docker-entrypoint-initdb.d/005_te_004.sql:ro
+      - ./migrations/topic_extraction/005_word_cloud_snapshot.sql:/docker-entrypoint-initdb.d/006_te_005.sql:ro
+      - ./migrations/topic_extraction/006_job_execution_tracking.sql:/docker-entrypoint-initdb.d/007_te_006.sql:ro
+      - ./migrations/topic_extraction/007_multi_source_scraper.sql:/docker-entrypoint-initdb.d/008_te_007.sql:ro
+      - ./migrations/topic_extraction/008_user_management.sql:/docker-entrypoint-initdb.d/009_te_008.sql:ro
+      - ./migrations/topic_extraction/009_force_password_change.sql:/docker-entrypoint-initdb.d/010_te_009.sql:ro
+      - ./migrations/topic_extraction/010_group_reply.sql:/docker-entrypoint-initdb.d/011_te_010.sql:ro
+      - ./migrations/topic_extraction/011_feedback.sql:/docker-entrypoint-initdb.d/012_te_011.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - ai-platform-network
+
+  # ── 2. Consul (config + service discovery) ─────────────────────────────────
+  consul:
+    image: hashicorp/consul:1.18
+    container_name: consul
+    restart: unless-stopped
+    ports:
+      - "8500:8500" # UI + HTTP API
+      - "8600:8600/udp" # DNS
+    command: agent -server -bootstrap-expect=1 -ui -client=0.0.0.0 -datacenter=dc1
+    volumes:
+      - consul-data:/consul/data
+      - ./consul/config:/consul/config
+    healthcheck:
+      test: ["CMD", "consul", "info"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    networks:
+      - ai-platform-network
+
+  # ── 3. Consul KV Bootstrap (one-shot init) ─────────────────────────────────
+  consul-bootstrap:
+    build:
+      context: .
+      dockerfile: consul/Dockerfile
+    container_name: consul-bootstrap
+    depends_on:
+      consul:
+        condition: service_healthy
+    environment:
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+    networks:
+      - ai-platform-network
+    restart: "no"
+
+  # ── 4. LM Service — Gemma 3 4B via Ollama (local, no external LLM API needed) ─
+  lm-service:
+    build:
+      context: .
+      dockerfile: lm-model/Dockerfile
+    container_name: lm-service
+    restart: unless-stopped
+    # Docker's embedded DNS (127.0.0.11) fails to resolve Ollama's CDN
+    # (*.r2.cloudflarestorage.com); use public resolvers so `ollama pull` works.
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    environment:
+      OLLAMA_MODEL: gemma3:4b
+      OLLAMA_HOST: 0.0.0.0
+      # Keep model in RAM indefinitely so nightly pipeline requests don't
+      # wait for a cold reload (Ollama default unloads after 5 min of inactivity).
+      OLLAMA_KEEP_ALIVE: "-1"
+      # One request at a time — avoids dual KV-cache RAM overhead on CPU inference.
+      OLLAMA_NUM_PARALLEL: "1"
+      # One model in RAM at a time.
+      OLLAMA_MAX_LOADED_MODELS: "1"
+      # Flash attention reduces RAM usage during inference (when supported).
+      OLLAMA_FLASH_ATTENTION: "1"
+    volumes:
+      # Persist downloaded model weights across container restarts.
+      # Without this, the ~2.5 GB model is re-downloaded on every `docker compose up`.
+      - lm-models:/root/.ollama
+    ports:
+      - "${LM_SERVICE_PORT:-11434}:11434" # Ollama API (OpenAI-compatible)
+      - "${LM_HEALTH_PORT:-11435}:8000" # app.py health endpoint
+    deploy:
+      resources:
+        limits:
+          # Gemma 3 4B Q4_K_M: ~3.5 GB model + ~1 GB KV cache + OS overhead.
+          # 8 GB gives comfortable headroom; reduce to 6 G on memory-constrained hosts.
+          memory: 8G
+        reservations:
+          memory: 4G
+          # ── GPU (optional) ─────────────────────────────────────────────────
+          # Uncomment to enable NVIDIA GPU passthrough.
+          # Requires: nvidia-container-toolkit installed on the Docker host.
+          # With a GPU, inference drops from ~10-90 s/request to <2 s/request.
+          #
+          # devices:
+          #   - driver: nvidia
+          #     count:  1
+          #     capabilities: [gpu]
+    healthcheck:
+      # Two-part check: Ollama server UP + specific model present in the library.
+      # Uses the /api/tags endpoint which lists all downloaded models.
+      test:
+        [
+          "CMD-SHELL",
+          "curl -sf http://localhost:11434/api/tags | grep -q gemma3 || exit 1",
+        ]
+      interval: 30s
+      timeout: 15s
+      retries: 30
+      # First-run: Ollama starts (~5 s) + model download (~2.5 GB, 5–15 min).
+      # Subsequent starts: model cached in volume, typically ready in <30 s.
+      start_period: 900s
+    networks:
+      - ai-platform-network
+    labels:
+      - "ai-platform.service=lm-service"
+
+  # ── 4b. Volume permissions init ────────────────────────────────────────────
+  logs-init:
+    image: alpine:3.20
+    container_name: logs-init
+    volumes:
+      - ai-platform-logs:/logs
+    entrypoint: ["sh", "-c", "chmod 1777 /logs"]
+    restart: "no"
+
+  # ── 5. AI Service A — Topic Extraction Pipeline ────────────────────────────
+  ai-service-a:
+    build:
+      context: .
+      dockerfile: services/ai-service-a/Dockerfile
+    container_name: ai-service-a
+    restart: unless-stopped
+    env_file:
+      - .env.platform
+      - .env
+    environment:
+      SERVICE_NAME: ai-service-a
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      PYTHONPATH: /app
+      PYTHONUNBUFFERED: "1"
+      ADMIN_API_KEY: ${DASHBOARD_API_KEY}
+      # Load the multilingual-e5 embedder from the vendored local copy (mounted
+      # below) instead of downloading ~1.1 GB from HuggingFace at runtime.
+      EMBEDDING_MODEL: /app/models/multilingual-e5-base
+      # ── LLM — points at the Ollama container (self-contained, no external API) ──
+      LLM_API_BASE_URL: http://lm-service:11434
+      LLM_API_ENDPOINT: /v1/chat/completions
+      LLM_API_FORMAT: openai
+      LLM_MODEL_NAME: gemma3:4b
+      LLM_ENABLED: "true"
+      # 300 s per request — CPU inference for 4B model can take up to 90 s
+      # on a 4-core machine; 300 s gives 3× safety margin.
+      LLM_TIMEOUT_SECONDS: "300"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      consul:
+        condition: service_healthy
+      consul-bootstrap:
+        condition: service_completed_successfully
+      # lm-service: service_started — don't wait for model to finish downloading;
+      # ai-service-a's LLMTopicLabeler.is_available() check handles the case where
+      # the model is still pulling, gracefully falling back to the HF classifier.
+      lm-service:
+        condition: service_started
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./dziri_topic_classifier_v2:/app/models/dziri_topic_classifier_v2:ro
+      - ./ensia-emobert-training:/app/models/ensia-emobert-training:ro
+      - ./models/multilingual-e5-base:/app/models/multilingual-e5-base:ro
+      - ./shared:/app/shared:ro
+      - ./words.yaml:/app/config/words.yaml:ro
+      # Persist the downloaded sentence-transformer (multilingual-e5) across restarts.
+      - hf-cache:/tmp/huggingface
+      - ai-platform-logs:/logs # writes /logs/ai-service-a.jsonl
+    ports:
+      - "${AI_SERVICE_A_PORT:-8080}:8080"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - ai-platform-network
+    labels:
+      - "ai-platform.service=ai-service-a"
+      - "ai-platform.restartable=true"
+
+  # ── 5. AI Service B — Meta Scraper ─────────────────────────────────────────
+  ai-service-b:
+    build:
+      context: .
+      dockerfile: services/ai-service-b/Dockerfile
+    container_name: ai-service-b
+    restart: unless-stopped
+    env_file:
+      - .env.platform
+    environment:
+      SERVICE_NAME: ai-service-b
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-db:5432/${POSTGRES_DB}
+      PYTHONPATH: /app/src
+      PYTHONUNBUFFERED: "1"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      consul:
+        condition: service_healthy
+      consul-bootstrap:
+        condition: service_completed_successfully
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - "./shared:/app/shared:ro"
+      - "ai-platform-logs:/logs" # writes /logs/ai-service-b.jsonl
+    ports:
+      - "${AI_SERVICE_B_PORT:-8081}:8081"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8081/health')",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+    networks:
+      - ai-platform-network
+    labels:
+      - "ai-platform.service=ai-service-b"
+      - "ai-platform.restartable=true"
+
+  # ── 6. Dashboard Service ───────────────────────────────────────────────────
+  dashboard-backend:
+    build:
+      context: services/dashboard_backend
+      dockerfile: Dockerfile
+    container_name: dashboard-backend
+    restart: unless-stopped
+    env_file:
+      - .env.platform
+    environment:
+      SERVICE_NAME: dashboard-backend
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      PYTHONPATH: /app
+      PYTHONUNBUFFERED: "1"
+      CORS_ORIGINS: "http://localhost:4028,http://127.0.0.1:4028"
+      # Group Reply: dashboard proxies submissions to reply-service (internal network).
+      REPLY_SERVICE_URL: "http://reply-service:8083"
+      REPLY_INTERNAL_SECRET: ${REPLY_INTERNAL_SECRET:-}
+      # Label Feedback: dashboard proxies corrections to feedback-service.
+      FEEDBACK_SERVICE_URL: "http://feedback-service:8084"
+      FEEDBACK_INTERNAL_SECRET: ${FEEDBACK_INTERNAL_SECRET:-}
+      # Manual "Run Now": dashboard orchestrates scrape (ai-b) -> pipeline (ai-a).
+      # DASHBOARD_API_KEY is the same value ai-service-a uses as its ADMIN_API_KEY.
+      AI_SERVICE_A_URL: "http://ai-service-a:8080"
+      AI_SERVICE_B_URL: "http://ai-service-b:8081"
+      DASHBOARD_API_KEY: ${DASHBOARD_API_KEY}
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      consul:
+        condition: service_healthy
+      consul-bootstrap:
+        condition: service_completed_successfully
+    volumes:
+      - "./shared:/app/shared:ro"
+      - "ai-platform-logs:/logs" # writes /logs/dashboard-backend.jsonl
+    ports:
+      - "${DASHBOARD_PORT:-3000}:3000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:3000/health')",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - ai-platform-network
+
+  # ── 6b. Reply Service — Group Reply dispatcher ─────────────────────────────
+  reply-service:
+    build:
+      context: .
+      dockerfile: services/reply-service/Dockerfile
+    container_name: reply-service
+    restart: unless-stopped
+    env_file:
+      - .env.platform
+    environment:
+      SERVICE_NAME: reply-service
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-db:5432/${POSTGRES_DB}
+      GRAPH_API_VERSION: ${GRAPH_API_VERSION:-v25.0}
+      REPLY_INTERNAL_SECRET: ${REPLY_INTERNAL_SECRET:-}
+      PYTHONPATH: /app/src:/app
+      PYTHONUNBUFFERED: "1"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      consul:
+        condition: service_healthy
+      consul-bootstrap:
+        condition: service_completed_successfully
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - "./shared:/app/shared:ro"
+      - "ai-platform-logs:/logs" # writes /logs/reply-service.jsonl
+    ports:
+      - "${REPLY_SERVICE_PORT:-8083}:8083"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8083/health')",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+    networks:
+      - ai-platform-network
+    labels:
+      - "ai-platform.service=reply-service"
+      - "ai-platform.restartable=true"
+
+  # ── 6c. Feedback Service — Label Feedback (human-in-the-loop correction) ────
+  feedback-service:
+    build:
+      context: .
+      dockerfile: services/feedback-service/Dockerfile
+    container_name: feedback-service
+    restart: unless-stopped
+    env_file:
+      - .env.platform
+    environment:
+      SERVICE_NAME: feedback-service
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-db:5432/${POSTGRES_DB}
+      FEEDBACK_INTERNAL_SECRET: ${FEEDBACK_INTERNAL_SECRET:-}
+      PYTHONPATH: /app/src:/app
+      PYTHONUNBUFFERED: "1"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      consul:
+        condition: service_healthy
+      consul-bootstrap:
+        condition: service_completed_successfully
+    volumes:
+      - "./shared:/app/shared:ro"
+      - "ai-platform-logs:/logs" # writes /logs/feedback-service.jsonl
+    ports:
+      - "${FEEDBACK_SERVICE_PORT:-8084}:8084"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8084/health')",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 384M
+          cpus: "0.5"
+    networks:
+      - ai-platform-network
+    labels:
+      - "ai-platform.service=feedback-service"
+      - "ai-platform.restartable=true"
+
+  # ── 7. Restart Orchestrator ────────────────────────────────────────────────
+  restart-orchestrator:
+    build:
+      context: .
+      dockerfile: services/restart-orchestrator/Dockerfile
+    container_name: restart-orchestrator
+    restart: unless-stopped
+    environment:
+      SERVICE_NAME: restart-orchestrator
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      PYTHONPATH: /app
+      PYTHONUNBUFFERED: "1"
+    depends_on:
+      consul:
+        condition: service_healthy
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./shared:/app/shared:ro"
+      - "ai-platform-logs:/logs" # writes /logs/restart-orchestrator.jsonl
+    ports:
+      - "${RESTART_ORCHESTRATOR_PORT:-8082}:8082"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8082/health')",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - ai-platform-network
+
+  # ── 8. Loki — Log Storage ───────────────────────────────────────────────────
+  loki:
+    image: grafana/loki:2.9.2
+    container_name: loki
+    restart: unless-stopped
+    command: -config.file=/etc/loki/loki-config.yml
+    volumes:
+      - ./docker/logging/loki/loki-config.yml:/etc/loki/loki-config.yml:ro
+      - loki-data:/loki
+    ports:
+      - "3100:3100"
+    healthcheck:
+      test:
+        ["CMD-SHELL", "wget -q --spider http://localhost:3100/ready || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - ai-platform-network
+
+  # ── 9. Promtail — Log Collector ──────────────────────────────────────────────
+  promtail:
+    image: grafana/promtail:2.9.2
+    container_name: promtail
+    restart: unless-stopped
+    command: -config.file=/etc/promtail/promtail-config.yml
+    volumes:
+      - ./docker/logging/promtail/promtail-config.yml:/etc/promtail/promtail-config.yml:ro
+      - ai-platform-logs:/logs:ro # reads log files written by services
+    depends_on:
+      loki:
+        condition: service_healthy
+    networks:
+      - ai-platform-network
+
+  # ── 10. Grafana — Log Dashboards ─────────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin # open access for internal platform use
+      GF_AUTH_DISABLE_LOGIN_FORM: "true" # remove login screen (internal network only)
+      GF_SERVER_HTTP_PORT: "4000"
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+      GF_PATHS_DASHBOARDS: /var/lib/grafana/dashboards
+      GF_LOG_LEVEL: warn
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./docker/logging/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./docker/logging/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      loki:
+        condition: service_healthy
+    ports:
+      - "${GRAFANA_PORT:-4000}:4000"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q --spider http://localhost:4000/api/health || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - ai-platform-network
+
+  # ── 11. BehaviorIQ Frontend ────────────────────────────────────────────────
+  behavioriq-frontend:
+    build:
+      context: ./services/behavioriq
+      dockerfile: Dockerfile
+    container_name: behavioriq-frontend
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_BASE: "http://localhost:3000/api"
+    ports:
+      - "4028:4028"
+    depends_on:
+      dashboard-backend:
+        condition: service_healthy
+    networks:
+      - ai-platform-network
+
+# ── Volumes ──────────────────────────────────────────────────────────────────
+volumes:
+  hf-cache:
+  consul-data:
+    name: ai-platform-consul-data
+  loki-data:
+    name: ai-platform-loki-data
+  grafana-data:
+    name: ai-platform-grafana-data
+  ai-platform-logs:
+    name: ai-platform-logs
+  lm-models:
+    # Stores downloaded Ollama model weights (~2.5 GB for Gemma 3 4B Q4_K_M).
+    # Persists across `docker compose down` and container restarts so the model
+    # is only downloaded once.
+    name: ai-platform-lm-models
+
+# ── Network ──────────────────────────────────────────────────────────────────
+networks:
+  ai-platform-network:
+    driver: bridge
+    name: ai-platform-network

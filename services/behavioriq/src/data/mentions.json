@@ -1,0 +1,252 @@
+{
+  "kpis": [
+    {
+      "id": "kpi-total",
+      "label": "Total Mentions",
+      "value": 152180,
+      "change": 15,
+      "type": "total"
+    },
+    {
+      "id": "kpi-avg",
+      "label": "Average Sentiment",
+      "value": 33394,
+      "change": 12,
+      "type": "sentiment"
+    },
+    {
+      "id": "kpi-twitter",
+      "label": "Twitter",
+      "value": 33394,
+      "change": 22,
+      "type": "platform",
+      "platform": "twitter"
+    },
+    {
+      "id": "kpi-instagram",
+      "label": "Instagram",
+      "value": 17742,
+      "change": 12,
+      "type": "platform",
+      "platform": "instagram"
+    },
+    {
+      "id": "kpi-facebook",
+      "label": "Facebook",
+      "value": 10394,
+      "change": 7,
+      "type": "platform",
+      "platform": "facebook"
+    },
+    {
+      "id": "kpi-tiktok",
+      "label": "TikTok",
+      "value": 90650,
+      "change": 8,
+      "type": "platform",
+      "platform": "tiktok"
+    }
+  ],
+  "mentions": [
+    {
+      "id": "m-001",
+      "platform": "Twitter",
+      "date": "Aug 20, 2025",
+      "time": "8:30am",
+      "comment": "The service was lovely, but the food took a bit long and was a bit disappointing. I think they could improve the wait times and the portion size...",
+      "fullComment": "The service was lovely, but the food took a bit long and was a bit disappointing. I think they could improve the wait times and the portion size. The staff was friendly though and the ambiance made up for some of it. Overall a decent experience but with room for improvement.",
+      "topic": "Customer Service",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-002",
+      "platform": "Facebook",
+      "date": "Aug 21, 2025",
+      "time": "1:20pm",
+      "comment": "Service was friendly, but my order was missing a side dish.",
+      "fullComment": "Service was friendly, but my order was missing a side dish. After informing the waiter, they resolved it within minutes. Good recovery overall but slightly inconvenient for the wait.",
+      "topic": "Customer Service",
+      "sentiment": "Neutral"
+    },
+    {
+      "id": "m-003",
+      "platform": "Instagram",
+      "date": "Aug 22, 2025",
+      "time": "6:45pm",
+      "comment": "Absolutely loved the steak — cooked perfectly!",
+      "fullComment": "Absolutely loved the steak — cooked perfectly! The seasoning was spot on and the presentation was beautiful. The side salad was fresh and well-dressed. Will definitely come back for this dish alone.",
+      "topic": "Product Quality",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-004",
+      "platform": "Twitter",
+      "date": "Aug 23, 2025",
+      "time": "10:05am",
+      "comment": "The coffee was cold and took forever to be replaced.",
+      "fullComment": "The coffee was cold and took forever to be replaced. Very disappointing experience. The place wasn't even busy at the time. I waited over 20 minutes before anyone acknowledged my complaint. Definitely not acceptable for a premium establishment.",
+      "topic": "Product Quality",
+      "sentiment": "Negative"
+    },
+    {
+      "id": "m-005",
+      "platform": "TikTok",
+      "date": "Aug 23, 2025",
+      "time": "7:50pm",
+      "comment": "Nice place to hang out with friends. Desserts were amazing!",
+      "fullComment": "Nice place to hang out with friends. Desserts were amazing! The chocolate lava cake was absolutely divine and perfectly warm in the centre. The staff was friendly and the music was perfectly ambient. Great atmosphere overall — highly recommend!",
+      "topic": "Ambiance",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-006",
+      "platform": "Facebook",
+      "date": "Aug 24, 2025",
+      "time": "3:40pm",
+      "comment": "The live music was a fantastic touch — will visit again soon!",
+      "fullComment": "The live music was a fantastic touch — will visit again soon! They had a jazz trio playing last Saturday evening and it really elevated the entire dining experience. The musicians were incredibly talented. Highly recommend visiting on weekends.",
+      "topic": "Ambiance",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-007",
+      "platform": "Instagram",
+      "date": "Aug 25, 2025",
+      "time": "9:10am",
+      "comment": "Food was okay, but prices were a bit on the higher side for the portion size.",
+      "fullComment": "Food was okay, but prices were a bit on the higher side for the portion size. I expected more value for what I paid. The taste was decent but nothing extraordinary to justify the price point. Might not return at this cost.",
+      "topic": "Product Quality",
+      "sentiment": "Neutral"
+    },
+    {
+      "id": "m-008",
+      "platform": "Twitter",
+      "date": "Aug 25, 2025",
+      "time": "11:30am",
+      "comment": "Delivery took over an hour. Food arrived cold and packaging was damaged.",
+      "fullComment": "Delivery took over an hour. Food arrived cold and the packaging was badly damaged — the container had leaked and soaked the bag. Customer support offered a 20% discount on next order but the experience was thoroughly disappointing.",
+      "topic": "Delivery",
+      "sentiment": "Negative"
+    },
+    {
+      "id": "m-009",
+      "platform": "Facebook",
+      "date": "Aug 26, 2025",
+      "time": "2:15pm",
+      "comment": "Quick delivery and food was still hot. Really impressed with the service!",
+      "fullComment": "Quick delivery and food was still hot. Really impressed with the service! The driver arrived in under 30 minutes and everything was packed securely. They even included a handwritten thank you note inside. A 10/10 delivery experience from start to finish.",
+      "topic": "Delivery",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-010",
+      "platform": "Instagram",
+      "date": "Aug 26, 2025",
+      "time": "4:30pm",
+      "comment": "Customer service team was incredibly helpful in resolving my billing issue.",
+      "fullComment": "Customer service team was incredibly helpful in resolving my billing issue. I had been double-charged and they refunded the full difference within 24 hours without any fuss whatsoever. Very impressed by the efficiency and professionalism of the team.",
+      "topic": "Customer Service",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-011",
+      "platform": "Twitter",
+      "date": "Aug 27, 2025",
+      "time": "9:00am",
+      "comment": "The new seasonal menu is absolutely phenomenal. Every dish was a winner!",
+      "fullComment": "The new seasonal menu is absolutely phenomenal. Every dish was a winner! The roasted butternut squash soup and the pan-seared salmon with lemon butter sauce were absolute standouts. Chef clearly knows what they're doing. Top-tier food quality.",
+      "topic": "Product Quality",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-012",
+      "platform": "TikTok",
+      "date": "Aug 27, 2025",
+      "time": "12:45pm",
+      "comment": "Waited 45 minutes for my table even with a reservation. Absolutely unacceptable.",
+      "fullComment": "Waited 45 minutes for my table even with a reservation. Absolutely unacceptable. When I finally got seated, the waiter was apologetic but the long delay had already ruined the mood for the entire evening. They need to better manage their reservations system.",
+      "topic": "Customer Service",
+      "sentiment": "Negative"
+    },
+    {
+      "id": "m-013",
+      "platform": "Facebook",
+      "date": "Aug 28, 2025",
+      "time": "6:00pm",
+      "comment": "The interior redesign is stunning. Such a warm and inviting atmosphere now!",
+      "fullComment": "The interior redesign is stunning. Such a warm and inviting atmosphere now! They've added new pendant lighting, cozy leather booths, and lush indoor plants throughout. The place feels like a completely different — and much better — venue.",
+      "topic": "Ambiance",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-014",
+      "platform": "Instagram",
+      "date": "Aug 28, 2025",
+      "time": "8:20pm",
+      "comment": "Delivery driver delivered to the wrong address and was rude when I called.",
+      "fullComment": "Delivery driver delivered to the wrong address and was rude when I called to correct the mistake. Had to wait an extra 25 minutes in total. Customer support eventually resolved it with a refund but this experience should never have happened.",
+      "topic": "Delivery",
+      "sentiment": "Negative"
+    },
+    {
+      "id": "m-015",
+      "platform": "Twitter",
+      "date": "Aug 29, 2025",
+      "time": "10:30am",
+      "comment": "Gluten-free options are limited but the ones available are genuinely good.",
+      "fullComment": "Gluten-free options are limited but the ones available are genuinely good quality. The GF pasta was perfectly cooked al dente and the marinara sauce was rich and deeply flavourful. Would love to see more GF dishes added to the main menu soon.",
+      "topic": "Product Quality",
+      "sentiment": "Neutral"
+    },
+    {
+      "id": "m-016",
+      "platform": "TikTok",
+      "date": "Aug 29, 2025",
+      "time": "3:15pm",
+      "comment": "Amazing rooftop view! Perfect spot for a romantic sunset date night.",
+      "fullComment": "Amazing rooftop view! Perfect spot for a romantic sunset date night. The golden hour lighting was absolutely breathtaking and the cocktail menu was creative and well-crafted. Staff were attentive without being intrusive. Loved every single moment.",
+      "topic": "Ambiance",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-017",
+      "platform": "Facebook",
+      "date": "Aug 30, 2025",
+      "time": "11:00am",
+      "comment": "Delivery was on time but the container leaked all over the bag.",
+      "fullComment": "Delivery was on time but the container leaked and made quite a mess inside the delivery bag. The food itself tasted fine once transferred to a plate but the packaging quality really needs serious improvement for a brand at this price point.",
+      "topic": "Delivery",
+      "sentiment": "Neutral"
+    },
+    {
+      "id": "m-018",
+      "platform": "Instagram",
+      "date": "Aug 30, 2025",
+      "time": "5:45pm",
+      "comment": "The weekend brunch spread was incredible. Best eggs benedict I have ever had!",
+      "fullComment": "The weekend brunch spread was incredible. Best eggs benedict I have ever had! The hollandaise was perfectly balanced — not too rich, not too sharp — and the bacon was crispy. The bottomless mimosas were a wonderful bonus. Highly recommend the weekend brunch.",
+      "topic": "Product Quality",
+      "sentiment": "Positive"
+    },
+    {
+      "id": "m-019",
+      "platform": "Twitter",
+      "date": "Aug 31, 2025",
+      "time": "2:00pm",
+      "comment": "Called customer support three times and still have not resolved my refund.",
+      "fullComment": "Called customer support three times over the past two weeks and still have not resolved my refund issue. Every single agent gives me a different answer and nothing ever gets actioned. Extremely frustrated with the complete lack of follow-through and accountability.",
+      "topic": "Customer Service",
+      "sentiment": "Negative"
+    },
+    {
+      "id": "m-020",
+      "platform": "TikTok",
+      "date": "Aug 31, 2025",
+      "time": "7:30pm",
+      "comment": "The background music selection is absolutely perfect. Love the vibe in here!",
+      "fullComment": "The background music selection is absolutely perfect. Love the vibe in here! They play a wonderful mix of smooth jazz and chill lounge music that perfectly complements the dining experience without being intrusive. The lighting enhances the mood beautifully too.",
+      "topic": "Ambiance",
+      "sentiment": "Positive"
+    }
+  ]
+}

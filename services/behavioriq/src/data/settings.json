@@ -1,0 +1,288 @@
+{
+  "integrations": [
+    {
+      "id": "int-twitter",
+      "name": "Twitter / X",
+      "category": "Social Media",
+      "status": "connected",
+      "lastSync": "2m ago",
+      "mentionsToday": 8420
+    },
+    {
+      "id": "int-facebook",
+      "name": "Facebook",
+      "category": "Social Media",
+      "status": "connected",
+      "lastSync": "4m ago",
+      "mentionsToday": 5100
+    },
+    {
+      "id": "int-instagram",
+      "name": "Instagram",
+      "category": "Social Media",
+      "status": "connected",
+      "lastSync": "4m ago",
+      "mentionsToday": 3900
+    },
+    {
+      "id": "int-tiktok",
+      "name": "TikTok",
+      "category": "Social Media",
+      "status": "connected",
+      "lastSync": "6m ago",
+      "mentionsToday": 2800
+    },
+    {
+      "id": "int-linkedin",
+      "name": "LinkedIn",
+      "category": "Professional",
+      "status": "connected",
+      "lastSync": "8m ago",
+      "mentionsToday": 1200
+    },
+    {
+      "id": "int-youtube",
+      "name": "YouTube",
+      "category": "Video",
+      "status": "error",
+      "lastSync": "1h ago",
+      "mentionsToday": 0
+    },
+    {
+      "id": "int-reddit",
+      "name": "Reddit",
+      "category": "Community",
+      "status": "connected",
+      "lastSync": "3m ago",
+      "mentionsToday": 4100
+    },
+    {
+      "id": "int-trustpilot",
+      "name": "Trustpilot",
+      "category": "Reviews",
+      "status": "connected",
+      "lastSync": "12m ago",
+      "mentionsToday": 890
+    },
+    {
+      "id": "int-yelp",
+      "name": "Yelp",
+      "category": "Reviews",
+      "status": "disconnected",
+      "lastSync": "Never",
+      "mentionsToday": 0
+    },
+    {
+      "id": "int-googlerv",
+      "name": "Google Reviews",
+      "category": "Reviews",
+      "status": "connected",
+      "lastSync": "18m ago",
+      "mentionsToday": 620
+    },
+    {
+      "id": "int-appstore",
+      "name": "App Store Reviews",
+      "category": "Reviews",
+      "status": "connected",
+      "lastSync": "22m ago",
+      "mentionsToday": 340
+    },
+    {
+      "id": "int-playstore",
+      "name": "Google Play Reviews",
+      "category": "Reviews",
+      "status": "connected",
+      "lastSync": "22m ago",
+      "mentionsToday": 280
+    },
+    {
+      "id": "int-zendesk",
+      "name": "Zendesk",
+      "category": "Support",
+      "status": "connected",
+      "lastSync": "5m ago",
+      "mentionsToday": 1100
+    },
+    {
+      "id": "int-intercom",
+      "name": "Intercom",
+      "category": "Support",
+      "status": "connected",
+      "lastSync": "7m ago",
+      "mentionsToday": 780
+    },
+    {
+      "id": "int-salesforce",
+      "name": "Salesforce",
+      "category": "CRM",
+      "status": "error",
+      "lastSync": "3h ago",
+      "mentionsToday": 0
+    },
+    {
+      "id": "int-hubspot",
+      "name": "HubSpot",
+      "category": "CRM",
+      "status": "connected",
+      "lastSync": "14m ago",
+      "mentionsToday": 430
+    }
+  ],
+  "aiModels": [
+    {
+      "id": "model-sentiment",
+      "label": "Sentiment Analysis Model",
+      "current": "BehaviorIQ-Sentiment v3.2",
+      "status": "active"
+    },
+    {
+      "id": "model-topic",
+      "label": "Topic Clustering Model",
+      "current": "BehaviorIQ-Cluster v2.8",
+      "status": "active"
+    },
+    {
+      "id": "model-intent",
+      "label": "Intent Classification Model",
+      "current": "BehaviorIQ-Intent v1.4",
+      "status": "beta"
+    },
+    {
+      "id": "model-escalation",
+      "label": "Escalation Prediction Model",
+      "current": "BehaviorIQ-Escalate v2.1",
+      "status": "active"
+    }
+  ],
+  "automationRules": [
+    {
+      "id": "rule-001",
+      "name": "Escalate Negative Churn Mentions",
+      "trigger": "Sentiment = Negative AND Tag = Churn Risk",
+      "action": "Notify Slack #cx-alerts + Create Zendesk Ticket",
+      "status": "active",
+      "lastRun": "8m ago",
+      "runCount": 142
+    },
+    {
+      "id": "rule-002",
+      "name": "Daily Sentiment Report",
+      "trigger": "Schedule: Every day at 08:00 AM",
+      "action": "Email report to analytics@acmecorp.com",
+      "status": "active",
+      "lastRun": "16h ago",
+      "runCount": 28
+    },
+    {
+      "id": "rule-003",
+      "name": "Emerging Topic Alert",
+      "trigger": "Topic velocity > 40% in 24h",
+      "action": "Push notification to mobile + Slack #brand-watch",
+      "status": "active",
+      "lastRun": "2h ago",
+      "runCount": 17
+    },
+    {
+      "id": "rule-004",
+      "name": "Hourly Source Sync",
+      "trigger": "Schedule: Every 60 minutes",
+      "action": "Sync all connected data sources",
+      "status": "active",
+      "lastRun": "48m ago",
+      "runCount": 1840
+    },
+    {
+      "id": "rule-005",
+      "name": "Pricing Spike Alert",
+      "trigger": "Topic = Pricing AND mentions > 500 in 1h",
+      "action": "Email VP Marketing + Escalate in dashboard",
+      "status": "paused",
+      "lastRun": "3d ago",
+      "runCount": 6
+    },
+    {
+      "id": "rule-006",
+      "name": "Weekly Executive Digest",
+      "trigger": "Schedule: Every Monday at 07:00 AM",
+      "action": "Generate PDF report + email to exec-team@acmecorp.com",
+      "status": "active",
+      "lastRun": "5d ago",
+      "runCount": 12
+    }
+  ],
+  "activeSessions": [
+    {
+      "id": "sess-001",
+      "device": "MacBook Pro 16\"",
+      "browser": "Chrome 124",
+      "location": "New York, US",
+      "ip": "192.168.1.***",
+      "lastActive": "Now",
+      "current": true
+    },
+    {
+      "id": "sess-002",
+      "device": "iPhone 15 Pro",
+      "browser": "Safari Mobile",
+      "location": "New York, US",
+      "ip": "192.168.1.***",
+      "lastActive": "2h ago",
+      "current": false
+    },
+    {
+      "id": "sess-003",
+      "device": "Windows 11 PC",
+      "browser": "Edge 122",
+      "location": "Chicago, US",
+      "ip": "10.0.0.***",
+      "lastActive": "1d ago",
+      "current": false
+    }
+  ],
+  "apiKeys": [
+    {
+      "id": "key-001",
+      "name": "Production Dashboard",
+      "key": "biq_live_sk_4f8a2b1c9e3d7f6a",
+      "created": "Jan 12, 2026",
+      "lastUsed": "2m ago",
+      "permissions": ["read:mentions", "read:topics", "read:sentiment"],
+      "status": "active"
+    },
+    {
+      "id": "key-002",
+      "name": "CI/CD Integration",
+      "key": "biq_live_sk_7d2e9c4a1b8f3e6d",
+      "created": "Mar 5, 2026",
+      "lastUsed": "1d ago",
+      "permissions": ["read:mentions", "write:tags", "read:analytics"],
+      "status": "active"
+    },
+    {
+      "id": "key-003",
+      "name": "Data Warehouse Export",
+      "key": "biq_live_sk_2c6b9f1a4e8d3c7b",
+      "created": "Apr 20, 2026",
+      "lastUsed": "6h ago",
+      "permissions": ["read:mentions", "read:topics", "read:sentiment", "export:bulk"],
+      "status": "active"
+    },
+    {
+      "id": "key-004",
+      "name": "Legacy Analytics Tool",
+      "key": "biq_live_sk_1a3d7e9c2b4f8a6e",
+      "created": "Nov 8, 2025",
+      "lastUsed": "45d ago",
+      "permissions": ["read:mentions"],
+      "status": "revoked"
+    }
+  ],
+  "currentUser": {
+    "name": "Anika K.",
+    "initials": "AK",
+    "email": "anika.k@acmecorp.com",
+    "role": "Senior Analyst",
+    "department": "Customer Experience"
+  }
+}

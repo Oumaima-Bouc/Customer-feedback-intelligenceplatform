@@ -1,0 +1,88 @@
+# Promtail collection configuration for AI platform JSONL logs.
+#
+# Services write one JSON object per line to /logs/{service}.jsonl.
+# Promtail keeps the original JSON line intact so Grafana can run `| json`
+# queries, while extracting only stable labels.
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: info
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+    batchwait: 1s
+    batchsize: 1048576
+    timeout: 10s
+    backoff_config:
+      min_period: 500ms
+      max_period: 5s
+      max_retries: 10
+
+scrape_configs:
+  - job_name: ai-platform-jsonl
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: ai-platform
+          log_source: jsonl
+          __path__: /logs/*.jsonl
+
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            service: service
+            level: level
+            logger: logger
+            event: event
+            correlation_id: correlation_id
+            path: path
+            status: status
+
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+          fallback_formats:
+            - RFC3339
+          action_on_failure: skip
+
+      - labels:
+          service:
+          level:
+          logger:
+
+  - job_name: ai-platform-rotated-jsonl
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: ai-platform
+          log_source: rotated-jsonl
+          __path__: /logs/*.jsonl.*
+
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            service: service
+            level: level
+            logger: logger
+            event: event
+            correlation_id: correlation_id
+
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+          fallback_formats:
+            - RFC3339
+          action_on_failure: skip
+
+      - labels:
+          service:
+          level:
+          logger:

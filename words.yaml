@@ -1,0 +1,151 @@
+################################################################################
+# DICTIONNAIRE DOMAINE – NUAGE DE MOTS (VERSION CORRIGÉE)
+# Algérie Télécom / Opérateurs Algériens
+# Source : Corpus Commentaires_RS.xlsx, Commentaires_à_traités.xlsx
+################################################################################
+
+categories:
+  # ============================================================
+  # 1. PRODUITS ET SERVICES
+  # ============================================================
+  products_and_services:
+    - word: "fibre"
+      variants: ["fibre", "fiber", "la fibre", "fibre optique", "FTTH", "الألياف البصرية", "الالياف", "فيبر", "فايبر", "فيبر اوبتيك"]
+    - word: "adsl"
+      variants: ["ADSL", "adsl", "اديسال", "ادياسال", "لاديسال", "l'adsl", "dsl", "DSL", "VDSL", "vdsl", "خط النحاس"]
+    - word: "idoom"
+      variants: ["idoom", "ايدوم", "ايدووم", "idoum", "idome", "idoom fibre", "idoom 4g"]
+    - word: "4g_lte"
+      variants: ["4G", "4g", "4جي", "4G LTE", "4g lte", "LTE", "مودام شريحة"]
+    - word: "my_idoom"
+      variants: ["My Idoom", "my idoom", "ماي ايدوم", "تطبيق ايدوم", "Application My Idoom"]
+    - word: "espace_client"
+      variants: ["فضاء الزبون", "espace client", "Espace Client", "espace-client", "فضاء الزبائن"]
+    - word: "iptv"
+      variants: ["IPTV", "iptv", "بث مباشر", "قنوات", "streaming", "VOD", "TOD", "bein sport"]
+    - word: "telephone_fixe"
+      variants: ["هاتف ثابت", "الهاتف الثابت", "تلفون ثابت", "خط ثابت", "le fixe", "téléphone fixe", "فيكس"]
+    - word: "operators"
+      variants: ["Algérie Télécom", "اتصالات الجزائر", "AT", "Djezzy", "جيزي", "Ooredoo", "اوريدو", "Mobilis", "موبيليس"]
+
+  # ============================================================
+  # 2. CONNECTIVITÉ ET DÉBIT
+  # ============================================================
+  connectivity_and_speed:
+    - word: "debit"
+      variants: ["débit", "debit", "تدفق", "سرعة التدفق", "الصبيب", "speed", "سرعة", "vitesse", "diibi"]
+    - word: "mega_giga"
+      variants: ["ميغا", "ميقا", "mega", "Mega", "جيغا", "جيقا", "giga", "Go", "GB", "Mbps"]
+    - word: "connexion"
+      variants: ["connexion", "connection", "كونيكسيو", "كونكسيون", "cnx", "الكونيكسيو", "النت"]
+    - word: "download"
+      variants: ["download", "téléchargement", "تحميل", "تنزيل", "داونلود"]
+    - word: "upload"
+      variants: ["upload", "رفع", "ابلود", "l'upload"]
+    - word: "ping_latence"
+      variants: ["ping", "بينغ", "latence", "latency", "تأخر", "jitter", "packet loss"]
+
+  # ============================================================
+  # 3. PROBLÈMES ET PANNES
+  # ============================================================
+  issues_and_complaints:
+    - word: "panne"
+      variants: ["panne", "عطل", "عطب", "خلل", "bug", "معطل", "hors service"]
+    - word: "coupure"
+      variants: ["coupure", "انقطاع", "مقطوع", "مقطوعة", "انقطعت", "copure", "تقطع", "انقطاعات", "تقطعات"]
+    - word: "lent"
+      variants: ["lent", "ثقيلة", "بطيء", "بطيئة", "بطئ", "تقيلة", "السلحفاة", "l'escargot", "lenteur"]
+    - word: "coupure_cable"
+      variants: ["سرقة الكابل", "كابل مقطوع", "vol de câble", "câble coupé", "خيط مقطوع", "كوابل مقطعة"]
+    - word: "hors_service"
+      variants: ["لا يعمل", "ما يمشيش", "ماخدمش", "ne marche pas", "ne fonctionne pas", "لا يشتغل", "مراهش يخدم", "حابس", "bloqué"]
+
+  # ============================================================
+  # 4. ÉQUIPEMENTS
+  # ============================================================
+  equipment:
+    - word: "modem"
+      variants: ["مودام", "مودم", "modem", "الجهاز", "ليمودام", "modem fibre"]
+    - word: "wifi"
+      variants: ["wifi", "ويفي", "Wi-Fi", "الويفي"]
+    - word: "cable_fibre"
+      variants: ["كابل", "خيط", "cable", "câble", "سلك", "PBO", "علبة الفيبر", "la boite"]
+    - word: "brands"
+      variants: ["Nokia", "نوكيا", "ZTE", "Huawei", "هواوي"]
+
+  # ============================================================
+  # 5. FACTURATION ET PAIEMENT
+  # ============================================================
+  billing_and_accounts:
+    - word: "facture"
+      variants: ["facture", "فاتورة", "bill", "فواتير", "الفاتورة"]
+    - word: "recharge"
+      variants: ["تعبئة", "recharge", "شارجي", "روشارجي", "تعبئة إلكترونية", "فليكسي", "flexy"]
+    - word: "paiement_en_ligne"
+      variants: ["دفع الكتروني", "paiement électronique", "e-payment", "paiement en ligne", "دفع اونلاين", "الذهبية", "carte dorée"]
+    - word: "tarif"
+      variants: ["سعر", "tarif", "prix", "الثمن", "السعر", "أسعار", "غالي", "غالية", "promotion"]
+    - word: "identifiant"
+      variants: ["رقم الزبون", "numéro client", "numéro de téléphone", "رقم المشترك"]
+
+  # ============================================================
+  # 6. INTERACTIONS ET SERVICE
+  # ============================================================
+  service_interactions:
+    - word: "technicien"
+      variants: ["تقني", "technicien", "فرقة تقنية", "المصالح التقنية", "tech"]
+    - word: "agence"
+      variants: ["وكالة", "agence", "الوكالة التجارية", "فرع"]
+    - word: "reclamation"
+      variants: ["شكوى", "شكاوي", "réclamation", "plainte", "انشغال", "شكينا"]
+    - word: "installation"
+      variants: ["تركيب", "ركبوها", "installation", "ربط", "raccordement", "أشغال"]
+    - word: "demande"
+      variants: ["طلب", "دوموند", "demande", "طلبات", "ملف", "درنا طلب"]
+
+  # ============================================================
+  # 7. EXPRESSIONS DE SENTIMENT
+  # ============================================================
+  sentiment:
+    - word: "positif"
+      variants: ["شكراً", "merci", "يعطيك الصحة", "bravo", "أحسنتم", "رائع", "ممتاز", "تحسن", "قفزة نوعية"]
+    - word: "negatif"
+      variants: ["كارثة", "catastrophe", "عيب", "honte", "كرهنا", "سئمنا", "صفر", "زيرو", "فاشل", "nul", "pire"]
+    - word: "inacceptable"
+      variants: ["ماشي معقول", "machi m3koul", "inacceptable", "غير معقول", "لا يعقل"]
+    - word: "fausses_promesses"
+      variants: ["وعود فارغة", "promesses", "كذب", "خرطي", "du vent"]
+
+  # ============================================================
+  # 8. DARIJA TÉLÉCOM SLANG (ARGOT)
+  # ============================================================
+  darija_slang:
+    - word: "ykhdem"
+      variants: ["يخدم", "ykhdem", "يمشي", "تمشي", "راهي تمشي", "يخدم مليح"]
+    - word: "makanich"
+      variants: ["ما كانش", "مكانش", "ma kanach", "ماكاش", "والو", "مكان والو"]
+    - word: "yflexy"
+      variants: ["يفليكسي", "فليكسيت", "فليكسي", "flexy"]
+    - word: "nkhless"
+      variants: ["نخلص", "يخلص", "خلصت", "payer", "مخلصين"]
+    - word: "nestenna"
+      variants: ["نستنا", "نستناو", "نستنى", "انتظر", "في الانتظار"]
+    - word: "bzaf"
+      variants: ["بزاف", "bzaf", "beaucoup", "كثير"]
+    - word: "riglo"
+      variants: ["ريقلو", "ريڨلو", "ريقلونا", "régler", "يسقّم"]
+
+  # ============================================================
+  # 9. ATTENTES ET TECHNIQUE
+  # ============================================================
+  technical_and_expectations:
+    - word: "augmentation_debit"
+      variants: ["رفع التدفق", "رفع السرعة", "augmentation du débit", "طلعو التدفق", "زيدو في السرعة"]
+    - word: "non_eligible"
+      variants: ["خطكم غير مؤهل", "ligne non éligible", "غير مؤهل", "ما يصلحش"]
+    - word: "test_vitesse"
+      variants: ["التاست", "test de vitesse", "speedtest", "تاست"]
+    - word: "restart"
+      variants: ["اعادة التشغيل", "redémarrage", "restart", "نطفيه", "طفيت المودام"]
+    - word: "zones_ombre"
+      variants: ["مناطق الظل", "zones d'ombre", "المناطق النائية", "بعيدة"]

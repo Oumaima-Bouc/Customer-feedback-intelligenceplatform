@@ -1,0 +1,422 @@
+[
+  {
+    "id": "topic-loyalty",
+    "name": "Customer Loyalty",
+    "category": "Brand Health",
+    "sentiment": {
+      "positive": 74,
+      "neutral": 18,
+      "negative": 8
+    },
+    "platforms": [
+      {
+        "name": "IG",
+        "pct": 40,
+        "color": "#E1306C"
+      },
+      {
+        "name": "FB",
+        "pct": 60,
+        "color": "#1877F2"
+      }
+    ],
+    "trend": 11,
+    "aiConfidence": 94,
+    "mentions": 12400,
+    "status": "healthy",
+    "comments": [
+      {
+        "id": "c1",
+        "author": "Aleksei P.",
+        "initials": "AP",
+        "avatarColor": "#9CA3AF",
+        "timeAgo": "1 hour ago",
+        "text": "Love the new loyalty tiers!",
+        "commentSentiment": "positive"
+      },
+      {
+        "id": "c2",
+        "author": "Maria G.",
+        "initials": "MG",
+        "avatarColor": "#F59E0B",
+        "timeAgo": "1 hour ago",
+        "text": "My last issue was resolved so fast.",
+        "commentSentiment": "positive"
+      },
+      {
+        "id": "c3",
+        "author": "Sarah L.",
+        "initials": "SL",
+        "avatarColor": "#10B981",
+        "timeAgo": "1 hour ago",
+        "text": "The mobile app is really great!",
+        "commentSentiment": "positive"
+      },
+      {
+        "id": "c4",
+        "author": "Sarah H.",
+        "initials": "SH",
+        "avatarColor": "#3B82F6",
+        "timeAgo": "2 hours ago",
+        "text": "Hi. The new rewards are amazing!",
+        "commentSentiment": "positive"
+      },
+      {
+        "id": "c5",
+        "author": "Sarah G.",
+        "initials": "SG",
+        "avatarColor": "#8B5CF6",
+        "timeAgo": "3 hours ago",
+        "text": "We love the premium experience!",
+        "commentSentiment": "positive"
+      }
+    ]
+  },
+  {
+    "id": "topic-pricing",
+    "name": "Pricing Concerns",
+    "category": "Revenue Risk",
+    "sentiment": {
+      "positive": 22,
+      "neutral": 30,
+      "negative": 48
+    },
+    "platforms": [
+      {
+        "name": "TW",
+        "pct": 55,
+        "color": "#1D9BF0"
+      },
+      {
+        "name": "TT",
+        "pct": 45,
+        "color": "#111827"
+      }
+    ],
+    "trend": -18,
+    "aiConfidence": 89,
+    "mentions": 9800,
+    "status": "critical",
+    "comments": [
+      {
+        "id": "c1",
+        "author": "Mike R.",
+        "initials": "MR",
+        "avatarColor": "#F43F5E",
+        "timeAgo": "30m ago",
+        "text": "Pricing went up 30% with no announcement. Considering switching.",
+        "commentSentiment": "neutral"
+      },
+      {
+        "id": "c2",
+        "author": "Anna V.",
+        "initials": "AV",
+        "avatarColor": "#10B981",
+        "timeAgo": "1h ago",
+        "text": "The quality is good but price is steep for students.",
+        "commentSentiment": "negative"
+      },
+      {
+        "id": "c3",
+        "author": "Mark C.",
+        "initials": "MC",
+        "avatarColor": "#F59E0B",
+        "timeAgo": "2h ago",
+        "text": "Food was decent but prices are way too high for the portion size.",
+        "commentSentiment": "negative"
+      },
+      {
+        "id": "c4",
+        "author": "Nina S.",
+        "initials": "NS",
+        "avatarColor": "#E1306C",
+        "timeAgo": "3h ago",
+        "text": "Tried to cancel my subscription and the system keeps erroring out.",
+        "commentSentiment": "negative"
+      },
+      {
+        "id": "c5",
+        "author": "Priya K.",
+        "initials": "PK",
+        "avatarColor": "#8B5CF6",
+        "timeAgo": "4h ago",
+        "text": "Delivery was late and packaging damaged. First bad experience.",
+        "commentSentiment": "negative"
+      },
+      {
+        "id": "c6",
+        "author": "Lena M.",
+        "initials": "LM",
+        "avatarColor": "#4F46E5",
+        "timeAgo": "5h ago",
+        "text": "Support resolved my issue quickly but pricing still hurts.",
+        "commentSentiment": "positive"
+      }
+    ]
+  },
+  {
+    "id": "topic-delivery",
+    "name": "Delivery Experience",
+    "category": "Operations",
+    "sentiment": {
+      "positive": 52,
+      "neutral": 28,
+      "negative": 20
+    },
+    "platforms": [
+      {
+        "name": "FB",
+        "pct": 48,
+        "color": "#1877F2"
+      },
+      {
+        "name": "IG",
+        "pct": 52,
+        "color": "#E1306C"
+      }
+    ],
+    "trend": 6,
+    "aiConfidence": 87,
+    "mentions": 8200,
+    "status": "healthy",
+    "comments": [
+      {
+        "id": "c1",
+        "author": "Emma T.",
+        "initials": "ET",
+        "avatarColor": "#10B981",
+        "timeAgo": "14m ago",
+        "text": "Service was friendly, but my order was missing a side dish.",
+        "commentSentiment": "neutral"
+      },
+      {
+        "id": "c2",
+        "author": "Sarah F.",
+        "initials": "SF",
+        "avatarColor": "#8B5CF6",
+        "timeAgo": "1h ago",
+        "text": "Nice vibe, great desserts! The wait time was a bit long but staff made up for it.",
+        "commentSentiment": "neutral"
+      },
+      {
+        "id": "c3",
+        "author": "Carlos V.",
+        "initials": "CV",
+        "avatarColor": "#F59E0B",
+        "timeAgo": "2h ago",
+        "text": "Love the new packaging design — feels premium. Keep up the great work!",
+        "commentSentiment": "positive"
+      },
+      {
+        "id": "c4",
+        "author": "Jenna D.",
+        "initials": "JD",
+        "avatarColor": "#3B82F6",
+        "timeAgo": "3h ago",
+        "text": "Fast delivery today, everything was warm and fresh.",
+        "commentSentiment": "positive"
+      }
+    ]
+  },
+  {
+    "id": "topic-support",
+    "name": "Support Response Time",
+    "category": "CX Operations",
+    "sentiment": {
+      "positive": 31,
+      "neutral": 29,
+      "negative": 40
+    },
+    "platforms": [
+      {
+        "name": "TW",
+        "pct": 62,
+        "color": "#1D9BF0"
+      },
+      {
+        "name": "FB",
+        "pct": 38,
+        "color": "#1877F2"
+      }
+    ],
+    "trend": -9,
+    "aiConfidence": 92,
+    "mentions": 7500,
+    "status": "warning",
+    "comments": [
+      {
+        "id": "c1",
+        "author": "Travel E.",
+        "initials": "TE",
+        "avatarColor": "#3B82F6",
+        "timeAgo": "2h ago",
+        "text": "The refund process is a nightmare. 3 weeks and still waiting.",
+        "commentSentiment": "negative"
+      },
+      {
+        "id": "c2",
+        "author": "Lena M.",
+        "initials": "LM",
+        "avatarColor": "#4F46E5",
+        "timeAgo": "3h ago",
+        "text": "Customer support resolved my issue in under 5 minutes. Impressive!",
+        "commentSentiment": "positive"
+      },
+      {
+        "id": "c3",
+        "author": "Nina S.",
+        "initials": "NS",
+        "avatarColor": "#E1306C",
+        "timeAgo": "4h ago",
+        "text": "Support keeps saying to wait more. Very frustrating experience.",
+        "commentSentiment": "negative"
+      },
+      {
+        "id": "c4",
+        "author": "Aleksei P.",
+        "initials": "AP",
+        "avatarColor": "#9CA3AF",
+        "timeAgo": "5h ago",
+        "text": "Chat support was helpful but took too long to connect.",
+        "commentSentiment": "neutral"
+      },
+      {
+        "id": "c5",
+        "author": "Maria G.",
+        "initials": "MG",
+        "avatarColor": "#F59E0B",
+        "timeAgo": "6h ago",
+        "text": "Email support never replied. Had to call twice.",
+        "commentSentiment": "negative"
+      }
+    ]
+  },
+  {
+    "id": "topic-app",
+    "name": "Mobile App UX",
+    "category": "Product Feedback",
+    "sentiment": {
+      "positive": 63,
+      "neutral": 24,
+      "negative": 13
+    },
+    "platforms": [
+      {
+        "name": "TT",
+        "pct": 44,
+        "color": "#111827"
+      },
+      {
+        "name": "IG",
+        "pct": 56,
+        "color": "#E1306C"
+      }
+    ],
+    "trend": 17,
+    "aiConfidence": 91,
+    "mentions": 6900,
+    "status": "healthy",
+    "comments": [
+      {
+        "id": "c1",
+        "author": "Chef L.",
+        "initials": "CL",
+        "avatarColor": "#E1306C",
+        "timeAgo": "28m ago",
+        "text": "Absolutely loved the new seasonal menu — the truffle pasta was cooked to perfection!",
+        "commentSentiment": "positive"
+      },
+      {
+        "id": "c2",
+        "author": "Anna V.",
+        "initials": "AV",
+        "avatarColor": "#10B981",
+        "timeAgo": "3h ago",
+        "text": "The new loyalty rewards app is so well designed! Earned 500 points in one visit.",
+        "commentSentiment": "neutral"
+      },
+      {
+        "id": "c3",
+        "author": "Sarah L.",
+        "initials": "SL",
+        "avatarColor": "#10B981",
+        "timeAgo": "4h ago",
+        "text": "The mobile app is really great and intuitive to use.",
+        "commentSentiment": "positive"
+      },
+      {
+        "id": "c4",
+        "author": "Jenna D.",
+        "initials": "JD",
+        "avatarColor": "#3B82F6",
+        "timeAgo": "5h ago",
+        "text": "Smooth checkout process, love the dark mode!",
+        "commentSentiment": "positive"
+      }
+    ]
+  },
+  {
+    "id": "topic-refund",
+    "name": "Refund Processing",
+    "category": "Finance Risk",
+    "sentiment": {
+      "positive": 18,
+      "neutral": 27,
+      "negative": 55
+    },
+    "platforms": [
+      {
+        "name": "TW",
+        "pct": 70,
+        "color": "#1D9BF0"
+      },
+      {
+        "name": "FB",
+        "pct": 30,
+        "color": "#1877F2"
+      }
+    ],
+    "trend": -23,
+    "aiConfidence": 96,
+    "mentions": 5400,
+    "status": "critical",
+    "comments": [
+      {
+        "id": "c1",
+        "author": "Travel E.",
+        "initials": "TE",
+        "avatarColor": "#3B82F6",
+        "timeAgo": "2h ago",
+        "text": "The refund process is a nightmare. 3 weeks and still waiting.",
+        "commentSentiment": "negative"
+      },
+      {
+        "id": "c2",
+        "author": "Nina S.",
+        "initials": "NS",
+        "avatarColor": "#E1306C",
+        "timeAgo": "3h ago",
+        "text": "Tried to cancel my subscription 3 times and the system keeps erroring out.",
+        "commentSentiment": "negative"
+      },
+      {
+        "id": "c3",
+        "author": "Mike R.",
+        "initials": "MR",
+        "avatarColor": "#F59E0B",
+        "timeAgo": "4h ago",
+        "text": "Refund approved but never arrived in my account. Unacceptable.",
+        "commentSentiment": "negative"
+      },
+      {
+        "id": "c4",
+        "author": "Priya K.",
+        "initials": "PK",
+        "avatarColor": "#8B5CF6",
+        "timeAgo": "5h ago",
+        "text": "Had to escalate to get my refund processed after 2 weeks.",
+        "commentSentiment": "negative"
+      }
+    ]
+  }
+]

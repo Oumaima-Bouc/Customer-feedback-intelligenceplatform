@@ -1,0 +1,175 @@
+{
+  "uid": "ai-platform-observability",
+  "title": "AI Platform Observability",
+  "tags": ["ai-platform", "loki", "pipelines"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "service",
+        "type": "query",
+        "datasource": { "type": "loki", "uid": "loki" },
+        "query": "label_values({job=\"ai-platform\"}, service)",
+        "refresh": 1,
+        "includeAll": true,
+        "multi": true,
+        "current": { "selected": true, "text": "All", "value": "$__all" }
+      },
+      {
+        "name": "level",
+        "type": "query",
+        "datasource": { "type": "loki", "uid": "loki" },
+        "query": "label_values({job=\"ai-platform\"}, level)",
+        "refresh": 1,
+        "includeAll": true,
+        "multi": true,
+        "current": { "selected": true, "text": "All", "value": "$__all" }
+      },
+      {
+        "name": "correlation_id",
+        "type": "textbox",
+        "label": "Correlation ID",
+        "query": "",
+        "current": { "text": "", "value": "" }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "timeseries",
+      "title": "Log Volume by Service",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (count_over_time({job=\"ai-platform\", service=~\"$service\", level=~\"$level\"}[5m]))",
+          "legendFormat": "{{service}}"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Errors and Warnings",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (service, level) (count_over_time({job=\"ai-platform\", service=~\"$service\", level=~\"WARNING|ERROR|CRITICAL\"}[5m]))",
+          "legendFormat": "{{service}} {{level}}"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "logs",
+      "title": "All Service Logs",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 8 },
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": true
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"ai-platform\", service=~\"$service\", level=~\"$level\"} | json | correlation_id=~\"$correlation_id.*\" | line_format \"{{.timestamp}} {{.level}} {{.service}} {{if .event}}{{.event}}{{else}}{{.logger}}{{end}} {{if .correlation_id}}trace={{.correlation_id}}{{end}} {{if .path}}path={{.path}}{{end}} {{if .status_code}}status={{.status_code}}{{end}} {{.message}}\""
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "logs",
+      "title": "AI Service A: Topic Extraction Pipeline",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 18 },
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "enableLogDetails": true,
+        "prettifyLogMessage": true
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"ai-platform\", service=\"ai-service-a\"} | json | event=~\".*pipeline.*|.*cluster.*|.*sentiment.*|.*llm.*|.*word_cloud.*|batch_topic_summary|sanitizer_rejected_comments|topic_daily_tracking_upserted\" | line_format \"{{.timestamp}} {{.level}} {{.event}} trace={{.correlation_id}} batch={{.batch}} fetched={{.fetched}} processed={{.processed}} updated={{.updated}} clusters={{.n_clusters}}{{.n_clusters_after_merge}} words={{.words}} {{.message}}\""
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "logs",
+      "title": "AI Service B: Scraper Pipeline",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 18 },
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "enableLogDetails": true,
+        "prettifyLogMessage": true
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"ai-platform\", service=\"ai-service-b\"} | json | event=~\"pipeline.*|scheduler.*|discovery.*|comment_engine.*|like_sync.*|persistence.*|rate_guard.*|recovery.*|lock_manager.*|validity_checker.*\" | line_format \"{{.timestamp}} {{.level}} {{.event}} job={{.job_id}} source={{.source_id}} platform={{.platform}} post={{.post_id}} comments={{.total_comments}}{{.comment_count}}{{.comments}} persisted={{.persisted}} quota={{.quota_pct}} {{.message}}\""
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "logs",
+      "title": "Configuration and Restarts",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 27 },
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "enableLogDetails": true,
+        "prettifyLogMessage": true
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"ai-platform\", service=~\"ai-service-a|ai-service-b|restart-orchestrator|dashboard-backend\"} | json | event=~\"config_manager.*|hot_reload.*|restart.*|watcher.*|restart_notifier.*\" | line_format \"{{.timestamp}} {{.level}} {{.service}} {{.event}} version={{.version}} keys={{.keys}}{{.changed_keys}} status={{.status}} {{.message}}\""
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "logs",
+      "title": "Latest Failures",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 27 },
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "enableLogDetails": true,
+        "prettifyLogMessage": true
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"ai-platform\", service=~\"$service\", level=~\"ERROR|CRITICAL\"} | json | line_format \"{{.timestamp}} {{.level}} {{.service}} {{.event}} trace={{.correlation_id}} error={{.error}} path={{.path}} {{.exception}} {{.message}}\""
+        }
+      ]
+    }
+  ]
+}
